@@ -13,8 +13,8 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class Controller extends AbstractController
 {
-    private ?string $api = "http://localhost:39625/cars/";
-    private ?string $apiUsers = "http://localhost:39625/user/";
+    private ?string $api = "http://localhost:42637/cars/";
+    private ?string $apiUsers = "http://localhost:42637/user/";
     private ?string $isLogged = "false";
 
     #[Route('/')]
