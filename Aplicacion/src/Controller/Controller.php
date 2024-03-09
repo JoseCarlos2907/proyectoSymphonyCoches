@@ -13,8 +13,8 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class Controller extends AbstractController
 {
-    private ?string $api = "http://localhost:45515/cars/";
-    private ?string $apiUsers = "http://localhost:45515/user/";
+    private ?string $api = "http://localhost:39625/cars/";
+    private ?string $apiUsers = "http://localhost:39625/user/";
     private ?string $isLogged = "false";
 
     #[Route('/')]
@@ -47,7 +47,9 @@ class Controller extends AbstractController
         $content = $response->getContent();
         $carArray = json_decode($content, true);
 
-        return $this->render("read/cars.html.twig", ['carArray' => $carArray,]);
+
+        $message = "Coche importado correctamente";
+        return $this->render("response.html.twig", ['message' => $message,]);
     }
 
 
