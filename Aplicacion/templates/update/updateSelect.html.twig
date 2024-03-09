@@ -8,15 +8,15 @@
 
     <div>
 
-        <form action="{{ path('producto_actualizar') }}" method="GET" >
+        <form action="{{ path('update_car_form') }}" method="GET" >
         <label>Selecciona el producto a actualizar</label>
 
         <select id="id" name="id">
           <option value="0">---</option>
-          {% for productos in arrayProductos %}
-              <option value="{{productos.id}}">
-                ID: {{productos.id}} --
-                Modelo: {{productos.modelo}}
+          {% for car in carsArray %}
+              <option value="{{car.id}}">
+                ID: {{car.id}} --
+                Modelo: {{car.model}}
               </option>
           {% endfor %}
         </select>

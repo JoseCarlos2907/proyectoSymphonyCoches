@@ -6,9 +6,9 @@
 
   <h1>Formulario para buscar un productos</h1>
 
-  <a href="{{ path('productos_mostrar') }}"><button>Mostrar todos los productos</button></a><br><br><br>
+  <a href="{{ path('show_all_cars') }}"><button>Mostrar todos los productos</button></a><br><br><br>
 
-  <form action="{{ path('producto_mostrar') }}" method="GET" >
+  <form action="{{ path('show_car_by_id') }}" method="GET" >
     <label for="id">ID:</label>
     <input type="text" id="id" name="id" required>
 

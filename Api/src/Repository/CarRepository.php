@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Componente;
+use App\Entity\Car;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Componente>
+ * @extends ServiceEntityRepository<Car>
  *
- * @method Componente|null find($id, $lockMode = null, $lockVersion = null)
- * @method Componente|null findOneBy(array $criteria, array $orderBy = null)
- * @method Componente[]    findAll()
- * @method Componente[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Car|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Car|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Car[]    findAll()
+ * @method Car[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ComponenteRepository extends ServiceEntityRepository
+class CarRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Componente::class);
+        parent::__construct($registry, Car::class);
     }
 
 //    /**
-//     * @return Componente[] Returns an array of Componente objects
+//     * @return Car[] Returns an array of Car objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class ComponenteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Componente
+//    public function findOneBySomeField($value): ?Car
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

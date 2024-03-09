@@ -1,0 +1,22 @@
+{% extends 'read/showForm.html.twig' %}
+
+{% block listaProducto %}
+
+  {% if carsArray == "Coche no encontrado" %}
+    <h4>{{ carsArray }}</h4>
+  {% else %}
+
+    <h1>Se han buscados los siguientes productos</h1>
+    {% for car in carsArray %}
+
+    <h3>Modelo: {{ car.model }}</h3>
+    <h4>Precio: {{ car.price }} $</h4>
+    <p>Fabricante: {{ car.manufacturer }}</p>
+    <p>ID: {{ car.id }}</p>
+    <p>Caracteristicas: {{ car.features }}</p>
+
+    <hr>
+
+  {% endfor %}
+  {% endif%}
+{% endblock %}

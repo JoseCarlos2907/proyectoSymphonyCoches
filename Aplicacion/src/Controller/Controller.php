@@ -9,12 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\VarDumper\VarDumper;
 
 class Controller extends AbstractController
 {
-    // private ?string $api = "https://65eae45243ce16418932bc60.mockapi.io/componentes/componente/";
-    private ?string $api = "http://localhost:34699/componentes/";
-    private ?string $apiUsers = "http://localhost:34699/user/";
+    private ?string $api = "http://localhost:45515/cars/";
+    private ?string $apiUsers = "http://localhost:45515/user/";
     private ?string $isLogged = "false";
 
     #[Route('/')]
@@ -23,146 +23,146 @@ class Controller extends AbstractController
         return $this->render("home.html.twig",['logged' => $this->isLogged]);
     }
 
-    // Para Anadir (POST) productos
-    public function formularioAnadirTwig(): Response
+    public function addFormTwig(): Response
     {
-        return $this->render("create/anadir.html.twig");
+        return $this->render("create/add.html.twig");
     }
 
-    public function anadirProducto(): Response
+    public function addCar(): Response
     {
-        $modelo = $_GET['modelo'];
-        $fabricante = $_GET['fabricante'];
-        $precio = $_GET['precio'];
-        $caracteristicas = $_GET['caracteristicas'];
+        $model = $_GET['model'];
+        $manufacturer = $_GET['manufacturer'];
+        $price = $_GET['price'];
+        $features = $_GET['features'];
 
         $client = HttpClient::create();
-        $urlConexion = $this->api . "add";
-        $response = $client->request('POST', $urlConexion, ['json' => [
-            'modelo' => $modelo,
-            'fabricante' =>  $fabricante,
-            'precio' =>  $precio,
-            'caracteristicas' =>  $caracteristicas
+        $urlConection = $this->api . "add";
+        $response = $client->request('POST', $urlConection, ['json' => [
+            'model' => $model,
+            'manufacturer' =>  $manufacturer,
+            'price' =>  $price,
+            'features' =>  $features
         ]]);
 
         $content = $response->getContent();
-        $arrayProducto = json_decode($content, true);
+        $carArray = json_decode($content, true);
 
-        return $this->render("read/productos.html.twig", ['arrayProductos' => $arrayProducto,]);
+        return $this->render("read/cars.html.twig", ['carArray' => $carArray,]);
     }
 
 
-    // Para Mostrar (READ) productos
-    public function productosBuscarTwig(): Response
+    public function showAllCarsTwig(): Response
     {
-        return $this->render("read/buscar.html.twig");
+        return $this->render("read/showForm.html.twig");
     }
 
-    public function productoBuscadoMostrar(): Response
-    {
-
-        $id = $_GET['id'];
-
-        $client = HttpClient::create();
-        $urlConexion = $this->api . "get/" . $id;
-        $response = $client->request('GET', $urlConexion);
-        $content = $response->getContent();
-        $arrayProducto = json_decode($content, true);
-
-        return $this->render("read/productos.html.twig", ['arrayProductos' => $arrayProducto,]);
-
-    }
-
-    public function mostrarProductos(): Response
-    {
-        $client = HttpClient::create();
-        $urlConexion = $this->api . "get";
-        $response = $client->request('GET', $urlConexion);
-        $content = $response->getContent();
-        $arrayProducto = json_decode($content, true);
-
-        return $this->render("read/productos.html.twig", ['arrayProductos' => $arrayProducto,]);
-
-    }
-
-    // Para Actualizar (UPDATE) productos
-    public function seleccionarProductoModificarTwig(): Response
-    {
-
-        $client = HttpClient::create();
-        $urlConexion = $this->api . "get";
-        $response = $client->request('GET', $urlConexion);
-        $content = $response->getContent();
-        $arrayProducto = json_decode($content, true);
-
-        return $this->render("update/selActualizar.html.twig", ['arrayProductos' => $arrayProducto,]);
-    }
-
-    public function formProductoModificar(): Response
+    public function showProductById(): Response
     {
 
         $id = $_GET['id'];
 
         $client = HttpClient::create();
-        $urlConexion = $this->api . "get/" . $id;
-        $response = $client->request('GET', $urlConexion);
+        $urlConection = $this->api . "get/" . $id;
+        $response = $client->request('GET', $urlConection);
         $content = $response->getContent();
-        $arrayProducto = json_decode($content, true);
+        $carArray = json_decode($content, true);
+        
+        return $this->render("read/cars.html.twig", ['carsArray' => $carArray,]);
 
-
-
-        return $this->render("update/actualizar.html.twig", ['arrayProducto' => $arrayProducto[0],]);
     }
 
-    public function modificarProducto(): Response
+    public function showAllCars(): Response
     {
-        $id = $_GET['id'];
-        $modelo = $_GET['modelo'];
-        $fabricante = $_GET['fabricante'];
-        $precio = $_GET['precio'];
-        $caracteristicas = $_GET['caracteristicas'];
+        $client = HttpClient::create();
+        $urlConection = $this->api . "get";
+        $response = $client->request('GET', $urlConection);
+        $content = $response->getContent();
+        $carsArray = json_decode($content, true);
+
+        return $this->render("read/cars.html.twig", ['carsArray' => $carsArray,]);
+
+    }
+
+    public function selectCarToUpdateTwig(): Response
+    {
 
         $client = HttpClient::create();
-        $urlConexion = $this->api . "edit/" . $id;
-        $response = $client->request('PUT', $urlConexion, ['json' => [
-            'modelo' => $modelo,
-            'fabricante' =>  $fabricante,
-            'precio' =>  $precio,
-            'caracteristicas' =>  $caracteristicas
+        $urlConection = $this->api . "get";
+        $response = $client->request('GET', $urlConection);
+        $content = $response->getContent();
+        $carsArray = json_decode($content, true);
+
+        return $this->render("update/updateSelect.html.twig", ['carsArray' => $carsArray,]);
+
+    }
+
+    public function sendToUpdateCarForm(): Response
+    {
+
+        $id = $_GET['id'];
+
+        $client = HttpClient::create();
+        $urlConection = $this->api . "get/" . $id;
+        $response = $client->request('GET', $urlConection);
+        $content = $response->getContent();
+        $carArray = json_decode($content, true);
+        
+        if($carArray == "Coche no encontrado"){
+            $message = $carArray;
+            return $this->render("response.html.twig", ['message' => $message,]);
+        }else{
+            return $this->render("update/update.html.twig", ['carArray' => $carArray[0],]);
+        }
+    }
+
+    public function updateCar(): Response
+    {
+        $id = $_GET['id'];
+        $model = $_GET['model'];
+        $manufacturer = $_GET['manufacturer'];
+        $price = $_GET['price'];
+        $features = $_GET['features'];
+
+        $client = HttpClient::create();
+        $urlConection = $this->api . "edit/" . $id;
+        $response = $client->request('PUT', $urlConection, ['json' => [
+            'model' => $model,
+            'manufacturer' =>  $manufacturer,
+            'price' =>  $price,
+            'features' =>  $features
         ]]);
 
         $content = $response->getContent();
-        $arrayProducto = json_decode($content, true);
+        $carArray = json_decode($content, true);
 
-        return $this->render("read/productos.html.twig", ['arrayProductos' => $arrayProducto,]);
+        return $this->render("read/cars.html.twig", ['carsArray' => $carArray,]);
     }
 
 
 
-    // Para Eliminar (DELETE) productos
-    public function formEliminarTwig(): Response
+    public function deleteFormTwig(): Response
     {
-        return $this->render("delete/eliminar.html.twig", array() );//Aqui iria el array con los productos a mostrar
+        return $this->render("delete/delete.html.twig");
     }
 
-    public function eliminarProd(): Response
+    public function deleteCar(): Response
     {
         $id = $_GET['id'];
 
         $client = HttpClient::create();
-        $urlConexion = $this->api . "delete/" . $id;
-        $response = $client->request('DELETE', $urlConexion);
+        $urlConection = $this->api . "delete/" . $id;
+        $response = $client->request('DELETE', $urlConection);
         $content = $response->getContent();
-        $mensaje = json_decode($content, true);
+        $message = json_decode($content, true);
 
-        return $this->render("delete/respuesta.html.twig", ['mensaje' => $mensaje,]);
+        return $this->render("response.html.twig", ['message' => $message,]);
     }
 
-    public function mostrarFormInicioYRegistroTwig(){
+    public function showLoginAndSignUpFormTwig(){
         return $this->render("session/session.html.twig");
     }
 
-    public function registroUsuario(): Response{
+    public function signUpUser(): Response{
 
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -173,15 +173,15 @@ class Controller extends AbstractController
         ];
 
         $client = HttpClient::create();
-        $urlConexion = $this->apiUsers . "register";
-        $response = $client->request('POST', $urlConexion, $userJSON);
+        $urlConection = $this->apiUsers . "register";
+        $response = $client->request('POST', $urlConection, $userJSON);
         $content = $response->getContent();
-        $mensaje = json_decode($content, true);
+        $message = json_decode($content, true);
 
-        return $this->render("delete/respuesta.html.twig", ['mensaje' => $mensaje,]);
+        return $this->render("response.html.twig", ['message' => $message,]);
     }
 
-    public function inicioSesionUsuario(): Response{
+    public function loginUser(): Response{
 
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -191,22 +191,18 @@ class Controller extends AbstractController
             "password"=>$password
         ];
 
-        // if(){
-
-        // }
-
         $client = HttpClient::create();
-        $urlConexion = $this->apiUsers . "checklogin";
-        $response = $client->request('POST', $urlConexion, $userJSON);
+        $urlConection = $this->apiUsers . "checklogin";
+        $response = $client->request('POST', $urlConection, $userJSON);
 
         $content = $response->getContent();
-        $mensaje = json_decode($content, true);
+        $message = json_decode($content, true);
 
-        $mensajeFinal = "Ha iniciado sesion";
-        if($mensaje['value'] == "true"){
-            setcookie("correoSesion",$email, time() + 60 * 60 * 24);
+        $finalMessage = "Ha iniciado sesion";
+        if($message['value'] == "true"){
+            setcookie("sessionEmail",$email, time() + 60 * 60 * 24);
 
-            if($mensaje["role"][0] == "ROLE_ADMIN"){
+            if($message["role"][0] == "ROLE_ADMIN"){
                 setcookie("admin",'true', time() + 60 * 60 * 24);
             }
             
@@ -214,16 +210,16 @@ class Controller extends AbstractController
             $this->isLogged = "true";
         }else{
             $this->isLogged = "false";
-            $mensajeFinal = "No es posible iniciar sesion";
+            $finalMessage = "No es posible iniciar sesion";
         }
 
 
-        return $this->render("delete/respuesta.html.twig", ['mensaje' => $mensajeFinal,]);
+        return $this->render("response.html.twig", ['message' => $finalMessage,]);
     }
 
-    public function borrarCookie(): Response{
-        setcookie("correoSesion",'', time() - 3600);
+    public function deleteCookie(): Response{
+        setcookie("sessionEmail",'', time() - 3600);
         setcookie("admin",'', time() - 3600);
-        return $this->render("delete/respuesta.html.twig", ['mensaje' => 'Sesion Cerrada',]);
+        return $this->render("response.html.twig", ['message' => 'Sesion Cerrada',]);
     }
 }

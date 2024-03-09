@@ -4,72 +4,72 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-inicio:
+home:
     path: /
     controller: App\Controller\Controller::homepage
 
 
 # Names para el anadir
-productos_anadir_form:
-    path: /anadir
-    controller: App\Controller\Controller::formularioAnadirTwig
+add_car_form:
+    path: /add
+    controller: App\Controller\Controller::addFormTwig
 
-anadirprod:
-    path: /anadirprod
-    controller: App\Controller\Controller::anadirProducto
+add_car:
+    path: /add-car
+    controller: App\Controller\Controller::addCar
 
 
 # Names para el leer
-productos_buscar:
-    path: /buscar
-    controller: App\Controller\Controller::productosBuscarTwig
+show_cars_form:
+    path: /show
+    controller: App\Controller\Controller::showAllCarsTwig
 
-producto_mostrar:
-    path: /buscarprod
-    controller: App\Controller\Controller::productoBuscadoMostrar
+show_car_by_id:
+    path: /show-car
+    controller: App\Controller\Controller::showProductById
 
-productos_mostrar:
-    path: /buscarprods
-    controller: App\Controller\Controller::mostrarProductos
+show_all_cars:
+    path: /show-all-cars
+    controller: App\Controller\Controller::showAllCars
 
 
 # Names para actualizar un producto
-sel_actualizar_producto:
-    path: /actualizar
-    controller: App\Controller\Controller::seleccionarProductoModificarTwig
+update_car_select:
+    path: /update-select
+    controller: App\Controller\Controller::selectCarToUpdateTwig
 
-producto_actualizar:
-    path: /producto
-    controller: App\Controller\Controller::formProductoModificar
+update_car_form:
+    path: /update-car-form
+    controller: App\Controller\Controller::sendToUpdateCarForm
 
-actualizar_producto:
-    path: /productoact
-    controller: App\Controller\Controller::modificarProducto
+update_car:
+    path: /update-car
+    controller: App\Controller\Controller::updateCar
 
 
 # Names para eliminar un producto
-form_eliminar_producto:
-    path: /eliminar
-    controller: App\Controller\Controller::formEliminarTwig
+delete_car_form:
+    path: /delete
+    controller: App\Controller\Controller::deleteFormTwig
 
-respuesta_eliminar:
-    path: /eliminarprod
-    controller: App\Controller\Controller::eliminarProd
+delete_car:
+    path: /delete-car
+    controller: App\Controller\Controller::deleteCar
 
 
 #Names para inicio de sesion y registro
-registro_usuario:
-    path: /reg
-    controller: App\Controller\Controller::registroUsuario
+sign_up_user:
+    path: /sign-up
+    controller: App\Controller\Controller::signUpUser
 
-inicio_sesion_usuario:
+login_user:
     path: /login
-    controller: App\Controller\Controller::inicioSesionUsuario
+    controller: App\Controller\Controller::loginUser
 
-inicio_registro_form:
-    path: /logform
-    controller: App\Controller\Controller::mostrarFormInicioYRegistroTwig
+login_user_form:
+    path: /login-form
+    controller: App\Controller\Controller::showLoginAndSignUpFormTwig
 
-cerrar_sesion:
-    path: /closess
-    controller: App\Controller\Controller::borrarCookie
+close_session:
+    path: /close-session
+    controller: App\Controller\Controller::deleteCookie
