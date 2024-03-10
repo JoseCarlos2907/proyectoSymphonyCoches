@@ -13,6 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cars', name: 'car')]
 class CarController extends AbstractController
 {
+    #[Route('/', name: 'home')]
+    public function home(){
+        return $this->json("Para gestionar los coches necesitas leer la documentacion", Response::HTTP_OK);
+    }
+
+
     #[Route('/add', name: 'add_car', methods:["POST"])]
     public function addCar(Request $request, EntityManagerInterface $entityManager): Response
     {

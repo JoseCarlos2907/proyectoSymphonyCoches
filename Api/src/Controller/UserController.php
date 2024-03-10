@@ -60,44 +60,6 @@ class UserController extends AbstractController
         return $this->json($userJson, Response::HTTP_OK);
     }
 
-    #[Route('/edit/{id}', name: 'user_edit', methods:["GET","PUT"])]
-    public function userEdit($id, Request $request, UserRepository $userRep, EntityManagerInterface $em): Response
-    {
-        $body = $request->getContent();
-        $data = json_decode($body, true);
-
-        $user = $userRep->find($id);
-        if(!$user)
-            return $this->json("Usuario no encontrado", Response::HTTP_NOT_FOUND);
-
-        if(isset($data["email"]))
-        $user->setEmail($data["email"]);
-        
-        if(isset($data["password"]))
-        $user->setPassword($data["password"]);
-
-        if(isset($data["roles"]))
-        $user->setRoles($data["roles"]);
-
-        $em->persist($user);
-        $em->flush();
-
-        return $this->json($user, Response::HTTP_OK);
-    }
-
-    #[Route('/delete/{id}', name: 'user_delete', methods:["DELETE"])]
-    public function userDelete($id, UserRepository $userRep, EntityManagerInterface $em): Response
-    {
-        $user = $userRep->find($id);
-        if(!$user)
-            return $this->json("Usuario no encontrado", Response::HTTP_NOT_FOUND);
-
-        $em->remove($user);
-        $em->flush();
-
-        return $this->json("Usuario Eliminado", Response::HTTP_OK);
-    }
-
     #[Route('/checklogin', name: 'check_login', methods:["POST"])]
     public function checkLoginParameters(UserRepository $userRep, Request $request){
 
