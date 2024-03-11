@@ -13,13 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cars', name: 'car')]
 class CarController extends AbstractController
 {
-    #[Route('/', name: 'home')]
-    public function home(){
-        return $this->json("Para gestionar los coches necesitas leer la documentacion", Response::HTTP_OK);
-    }
+    // #[Route('/', name: 'home')]
+    // public function home(){
+    //     return $this->json("Para gestionar los coches necesitas leer la documentacion", Response::HTTP_OK);
+    // }
 
 
-    #[Route('/add', name: 'add_car', methods:["POST"])]
+    #[Route('/', name: 'add_car', methods:["POST"])]
     public function addCar(Request $request, EntityManagerInterface $entityManager): Response
     {
         $body = $request->getContent();
@@ -37,7 +37,7 @@ class CarController extends AbstractController
         return $this->json($car, Response::HTTP_CREATED);
     }
 
-    #[Route('/get', name: 'car_get', methods:["GET"])]
+    #[Route('/', name: 'car_get', methods:["GET"])]
     public function getCar(CarRepository $carRep): Response
     {
         $cars = $carRep->findAll();
@@ -55,7 +55,7 @@ class CarController extends AbstractController
         return $this->json($carsJSON);
     }
 
-    #[Route('/get/{id}', name: 'car_get_id', methods:["GET"])]
+    #[Route('/{id}', name: 'car_get_id', methods:["GET"])]
     public function getCarById($id, CarRepository $carRep): Response
     {
         $car = $carRep->find($id);
@@ -73,7 +73,7 @@ class CarController extends AbstractController
         return $this->json($carsJSON, Response::HTTP_OK);
     }
 
-    #[Route('/edit/{id}', name: 'car_edit', methods:["PUT"])]
+    #[Route('/{id}', name: 'car_edit', methods:["PUT"])]
     public function editCar($id, Request $request, CarRepository $carRep, EntityManagerInterface $em): Response
     {
         $body = $request->getContent();
